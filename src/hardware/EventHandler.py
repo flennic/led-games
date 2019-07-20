@@ -5,7 +5,6 @@ class EventHandler:
 
     @staticmethod
     async def filter_known(generator):
-
         async for event in generator:
             next_event = event
             parsed_next_event = ce.ControllerEvent(next_event)
