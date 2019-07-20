@@ -1,12 +1,13 @@
 import evdev
 from evdev import InputDevice
 import aiostream
+import logging
 
 
 class ControllerHandler:
 
     def __init__(self):
-        print(evdev.list_devices())
+        logging.info("Devices found: {0}".format(evdev.list_devices()))
         self.__gamepads = list(map(InputDevice, evdev.list_devices()))
 
     @property

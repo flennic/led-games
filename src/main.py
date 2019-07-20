@@ -1,5 +1,5 @@
-from hardware.ControllerHandler import ControllerHandler
-from hardware.EventHandler import EventHandler
+from src.hardware.ControllerHandler import ControllerHandler
+from src.hardware.EventHandler import EventHandler
 import asyncio
 import logging
 
