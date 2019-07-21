@@ -1,4 +1,4 @@
-from src.hardware.ControllerEvent import ControllerEvent
+from hardware.ControllerEvent import ControllerEvent
 
 
 class EventHandler:
@@ -9,5 +9,5 @@ class EventHandler:
             next_event = event
             parsed_next_event = ControllerEvent(next_event)
 
-            if parsed_next_event.ControllerKeyCode is not None:
+            if parsed_next_event.controller_key_code is not None:
                 yield parsed_next_event

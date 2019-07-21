@@ -25,11 +25,13 @@ class ControllerKeyDirection(Enum):
 
 class ControllerEvent:
 
-    ControllerKeyCode = None
-    ControllerKeyDirection = None
+    controller_key_code = None
+    controller_key_direction = None
+    controller_id = None
 
     def __init__(self, event):
-        self.event = event
+        self.event = event['event']
+        self.controller_id = event['gamepad_id']
         self.__assign_code_and_direction()
 
     def __str__(self):
@@ -43,99 +45,101 @@ class ControllerEvent:
         time = self.event.sec
 
         try:
-            code = self.ControllerKeyCode.name
-            direction = self.ControllerKeyDirection.name
+            code = self.controller_key_code.name
+            direction = self.controller_key_direction.name
         except AttributeError:
             return "Unidentifiable event at {0}.".format(time)
 
-        return "Button {0} was {1}ED at {2}.".format(code, direction, time)
+        return "Gamepad {0}: Button {1} was {2}ED at {3}.".format(self.controller_id, code, direction, time)
 
     def __assign_code_and_direction(self):
 
+        if self.event.type == 0:
+            return
         # A
         if self.event.code == 289:
-            self.ControllerKeyCode = ControllerKeyCode.A
+            self.controller_key_code = ControllerKeyCode.A
             if self.event.value == 1:
-                self.ControllerKeyDirection = ControllerKeyDirection.PRESS
+                self.controller_key_direction = ControllerKeyDirection.PRESS
             elif self.event.value == 0:
-                self.ControllerKeyDirection = ControllerKeyDirection.RELEASE
+                self.controller_key_direction = ControllerKeyDirection.RELEASE
 
         # B
         if self.event.code == 290:
-            self.ControllerKeyCode = ControllerKeyCode.B
+            self.controller_key_code = ControllerKeyCode.B
             if self.event.value == 1:
-                self.ControllerKeyDirection = ControllerKeyDirection.PRESS
+                self.controller_key_direction = ControllerKeyDirection.PRESS
             elif self.event.value == 0:
-                self.ControllerKeyDirection = ControllerKeyDirection.RELEASE
+                self.controller_key_direction = ControllerKeyDirection.RELEASE
 
         # X
         if self.event.code == 288:
-            self.ControllerKeyCode = ControllerKeyCode.X
+            self.controller_key_code = ControllerKeyCode.X
             if self.event.value == 1:
-                self.ControllerKeyDirection = ControllerKeyDirection.PRESS
+                self.controller_key_direction = ControllerKeyDirection.PRESS
             elif self.event.value == 0:
-                self.ControllerKeyDirection = ControllerKeyDirection.RELEASE
+                self.controller_key_direction = ControllerKeyDirection.RELEASE
 
         # Y
         if self.event.code == 291:
-            self.ControllerKeyCode = ControllerKeyCode.Y
+            self.controller_key_code = ControllerKeyCode.Y
             if self.event.value == 1:
-                self.ControllerKeyDirection = ControllerKeyDirection.PRESS
+                self.controller_key_direction = ControllerKeyDirection.PRESS
             elif self.event.value == 0:
-                self.ControllerKeyDirection = ControllerKeyDirection.RELEASE
+                self.controller_key_direction = ControllerKeyDirection.RELEASE
 
         # SELECT
         if self.event.code == 296:
-            self.ControllerKeyCode = ControllerKeyCode.SELECT
+            self.controller_key_code = ControllerKeyCode.SELECT
             if self.event.value == 1:
-                self.ControllerKeyDirection = ControllerKeyDirection.PRESS
+                self.controller_key_direction = ControllerKeyDirection.PRESS
             elif self.event.value == 0:
-                self.ControllerKeyDirection = ControllerKeyDirection.RELEASE
+                self.controller_key_direction = ControllerKeyDirection.RELEASE
 
         # START
         if self.event.code == 297:
-            self.ControllerKeyCode = ControllerKeyCode.START
+            self.controller_key_code = ControllerKeyCode.START
             if self.event.value == 1:
-                self.ControllerKeyDirection = ControllerKeyDirection.PRESS
+                self.controller_key_direction = ControllerKeyDirection.PRESS
             elif self.event.value == 0:
-                self.ControllerKeyDirection = ControllerKeyDirection.RELEASE
+                self.controller_key_direction = ControllerKeyDirection.RELEASE
 
         # L
         if self.event.code == 292:
-            self.ControllerKeyCode = ControllerKeyCode.L
+            self.controller_key_code = ControllerKeyCode.L
             if self.event.value == 1:
-                self.ControllerKeyDirection = ControllerKeyDirection.PRESS
+                self.controller_key_direction = ControllerKeyDirection.PRESS
             elif self.event.value == 0:
-                self.ControllerKeyDirection = ControllerKeyDirection.RELEASE
+                self.controller_key_direction = ControllerKeyDirection.RELEASE
 
         # R
         if self.event.code == 294:
-            self.ControllerKeyCode = ControllerKeyCode.R
+            self.controller_key_code = ControllerKeyCode.R
             if self.event.value == 1:
-                self.ControllerKeyDirection = ControllerKeyDirection.PRESS
+                self.controller_key_direction = ControllerKeyDirection.PRESS
             elif self.event.value == 0:
-                self.ControllerKeyDirection = ControllerKeyDirection.RELEASE
+                self.controller_key_direction = ControllerKeyDirection.RELEASE
 
         # UP_DOWN
         if self.event.code == 1:
             if self.event.value == 0:
-                self.ControllerKeyCode = ControllerKeyCode.UP
-                self.ControllerKeyDirection = ControllerKeyDirection.PRESS
+                self.controller_key_code = ControllerKeyCode.UP
+                self.controller_key_direction = ControllerKeyDirection.PRESS
             elif self.event.value == 255:
-                self.ControllerKeyCode = ControllerKeyCode.DOWN
-                self.ControllerKeyDirection = ControllerKeyDirection.PRESS
+                self.controller_key_code = ControllerKeyCode.DOWN
+                self.controller_key_direction = ControllerKeyDirection.PRESS
             elif self.event.value == 127:
-                self.ControllerKeyCode = ControllerKeyCode.UP_DOWN
-                self.ControllerKeyDirection = ControllerKeyDirection.RELEASE
+                self.controller_key_code = ControllerKeyCode.UP_DOWN
+                self.controller_key_direction = ControllerKeyDirection.RELEASE
 
         # LEFT_RIGHT
         if self.event.code == 0:
             if self.event.value == 0:
-                self.ControllerKeyCode = ControllerKeyCode.LEFT
-                self.ControllerKeyDirection = ControllerKeyDirection.PRESS
+                self.controller_key_code = ControllerKeyCode.LEFT
+                self.controller_key_direction = ControllerKeyDirection.PRESS
             elif self.event.value == 255:
-                self.ControllerKeyCode = ControllerKeyCode.RIGHT
-                self.ControllerKeyDirection = ControllerKeyDirection.PRESS
+                self.controller_key_code = ControllerKeyCode.RIGHT
+                self.controller_key_direction = ControllerKeyDirection.PRESS
             elif self.event.value == 127:
-                self.ControllerKeyCode = ControllerKeyCode.LEFT_RIGHT
-                self.ControllerKeyDirection = ControllerKeyDirection.RELEASE
+                self.controller_key_code = ControllerKeyCode.LEFT_RIGHT
+                self.controller_key_direction = ControllerKeyDirection.RELEASE
